@@ -2,6 +2,15 @@
 
 Outlines the steps on signing and verifying container images using a tool called cosign.
 
+## Process
+The overall process is as follows:
+
+1. Generate a (private/public) key pair
+2. Sign the container image with the private key & store the signature in the container registry
+3. locate the signatures for container images and verify them using known public key
+
+## Usage Workflow
+
 Install Cosign:
 ```bash
 brew install sigstore/tap/cosign
