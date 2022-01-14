@@ -1,5 +1,6 @@
 # cosign-signing-container-images
 
+Outlines the steps on signing and verifying container images using a tool called cosign.
 
 Install Cosign:
 ```bash
@@ -25,6 +26,22 @@ Enter password for private key:
 Locating the cosign image reference from the container registry:
 
 ```bash
+❯ cosign triangulate colinbut/test-image:latest
+index.docker.io/colinbut/test-image:sha256-3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc.sig
+```
+
+Lastly, verifying the docker image against the public key and verify the signature's authenticity.
+
+```bash
+❯ cosign verify --key cosign.pub colinbut/test-image:latest
+
+Verification for index.docker.io/colinbut/test-image:latest --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - The signatures were verified against the specified public key
+  - Any certificates were verified against the Fulcio roots.
+
+[{"critical":{"identity":{"docker-reference":"index.docker.io/colinbut/test-image"},"image":{"docker-manifest-digest":"sha256:3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc"},"type":"cosign container image signature"},"optional":null}]
 ```
 
 ## Authors
