@@ -53,6 +53,42 @@ The following checks were performed on each of these signatures:
 [{"critical":{"identity":{"docker-reference":"index.docker.io/colinbut/test-image"},"image":{"docker-manifest-digest":"sha256:3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc"},"type":"cosign container image signature"},"optional":null}]
 ```
 
+## Signing SBOM
+
+Cosign allows signing of sboms. Sbom is Software Bill of Materials which is a list of components/software libraries (application & OS) that gets bundled as part of the software artifact.
+
+Using another tool (Syft) that is specifically designed for generating sboms as part of the process:
+
+e.g.
+```bash
+syft packages colinbut/test-image:latest --scope all-layers -o spdx > test-image.spdx
+```
+
+The next step is to attach the sbom to the container image:
+
+```bash
+❯ cosign attach sbom --sbom test-image.spdx colinbut/test-image:latest
+Uploading SBOM file for [index.docker.io/colinbut/test-image:latest] to [index.docker.io/colinbut/test-image:sha256-3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc.sbom] with mediaType [text/spdx].
+```
+
+Lastly, signing the sbom in the registry and checking it:
+
+```bash
+cosign sign --key cosign.key index.docker.io/colinbut/test-image:sha256-3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc.sbom
+```
+
+```bash
+❯ cosign verify --key cosign.pub index.docker.io/colinbut/test-image:sha256-3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc.sbom
+
+Verification for index.docker.io/colinbut/test-image:sha256-3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc.sbom --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - The signatures were verified against the specified public key
+  - Any certificates were verified against the Fulcio roots.
+
+[{"critical":{"identity":{"docker-reference":"index.docker.io/colinbut/test-image"},"image":{"docker-manifest-digest":"sha256:30e6c2193fa68b86a1c132330106efa7933bf9d4cd2ba7679a1b015db21e7d47"},"type":"cosign container image signature"},"optional":null}]
+```
+
 ## Authors
 
 Colin But.
