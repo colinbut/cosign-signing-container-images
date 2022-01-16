@@ -13,13 +13,13 @@ The overall process is as follows:
 
 Install Cosign:
 ```bash
-brew install sigstore/tap/cosign
+❯ brew install sigstore/tap/cosign
 ```
 
 One of the first things that needs to be done is to generate a key pair:
 
 ```bash
-$ cosign generate-key-pair
+❯ cosign generate-key-pair
 Enter password for private key:
 Enter again:
 Private key written to cosign.key
@@ -28,7 +28,7 @@ Public key written to cosign.pub
 
 Sign the docker image:
 ```bash
-$ cosign sign --key cosign.key colinbut/test-image:latest
+❯ cosign sign --key cosign.key colinbut/test-image:latest
 Enter password for private key:
 ```
 
@@ -61,7 +61,7 @@ Using another tool (Syft) that is specifically designed for generating sboms as 
 
 e.g.
 ```bash
-syft packages colinbut/test-image:latest --scope all-layers -o spdx > test-image.spdx
+❯ syft packages colinbut/test-image:latest --scope all-layers -o spdx > test-image.spdx
 ```
 
 The next step is to attach the sbom to the container image:
@@ -74,7 +74,7 @@ Uploading SBOM file for [index.docker.io/colinbut/test-image:latest] to [index.d
 Lastly, signing the sbom in the registry and checking it:
 
 ```bash
-cosign sign --key cosign.key index.docker.io/colinbut/test-image:sha256-3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc.sbom
+❯ cosign sign --key cosign.key index.docker.io/colinbut/test-image:sha256-3b935143ff0ed20de1827c4d1409df6179ad351924a085b16900ca9cb5e556dc.sbom
 ```
 
 ```bash
