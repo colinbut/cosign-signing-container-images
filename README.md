@@ -1,6 +1,6 @@
 # cosign-signing-container-images
 
-Outlines the steps on signing and verifying container images using a tool called cosign.
+Outlines the steps on signing and verifying container images using a tool called [cosign](https://github.com/sigstore/cosign).
 
 ## Process
 The overall process is as follows:
