@@ -57,7 +57,7 @@ The following checks were performed on each of these signatures:
 
 Cosign allows signing of sboms. Sbom is Software Bill of Materials which is a list of components/software libraries (application & OS) that gets bundled as part of the software artifact.
 
-Using another tool (Syft) that is specifically designed for generating sboms as part of the process:
+Using another tool - [Syft](https://github.com/anchore/syft) - that is specifically designed for generating sboms as part of the process:
 
 e.g.
 ```bash
